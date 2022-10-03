@@ -17,5 +17,17 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", async () => {
+          try {
+            await navigator.serviceWorker.register("/pwaTest/sw.js");
+            console.log("SW started");
+          } catch (error) {
+            console.log("error init SW");
+          }
+        });
+      }
+    </script>
   </body>
 </html>
