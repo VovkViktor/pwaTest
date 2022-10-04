@@ -13,6 +13,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate, CacheFirst } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
+import { RangeRequestsPlugin } from "workbox-range-requests";
 
 clientsClaim();
 
@@ -59,6 +60,33 @@ registerRoute(
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 }),
+    ],
+  })
+);
+
+registerRoute(
+  ({ url }) => url.pathname.endsWith(".mp4"),
+  new CacheFirst({
+    plugins: [new RangeRequestsPlugin()],
+  })
+);
+
+registerRoute(
+  // Add in any other file extensions or routing criteria as needed.
+  ({ url }) =>
+    url.origin === "https://jsonplaceholder.typicode.com" ||
+    url.pathname === "/users", // Customize this strategy as needed, e.g., by changing to CacheFirst.
+
+  new StaleWhileRevalidate({
+    cacheName: "apiRequestCashe",
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+      new ExpirationPlugin({
+        maxEntries: 1,
+      }),
     ],
   })
 );
