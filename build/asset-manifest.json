@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/pwaTest/static/js/main.0a587308.js",
+    "static/media/365.png": "/pwaTest/static/media/365.e261fc8211f4cd449680.png",
+    "service-worker.js": "/pwaTest/service-worker.js",
+    "index.html": "/pwaTest/index.html",
+    "main.0a587308.js.map": "/pwaTest/static/js/main.0a587308.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.0a587308.js"
+  ]
+}
